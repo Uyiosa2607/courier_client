@@ -12,7 +12,7 @@ export default function Card(props){
              (
                     <div className="card">
                         <div className="top_bar">
-                            <span>Order tracking - 9QE282HFHWR9W</span>
+                            <span>Order tracking - {data.tracking_number}</span>
                         </div>
                         <div className="card_details">
                             <span className="status">IN TRANSIT</span>
@@ -20,21 +20,21 @@ export default function Card(props){
                         </div>
                         <div className="card_body">
                             <div className="status_div">
-                                <div className="icon pending">
+                                <div className={data.processing_status ? "icon pending": "icon"}>
                                     <i class="fa-solid fa-truck-fast fa-2x"></i>
                                 </div>
                                 <span>Picked up</span>
                             </div>
-                            <span className="bar"></span>
+                            <span className={data.processing_status ? "bar pending" : "bar"}></span>
                             <div className="status_div">
-                                <div className="icon">
+                                <div className={data.shipped_status ? "icon pending" : "icon"}>
                                     <i class="fa-solid fa-dolly fa-2x"></i>
                                 </div>
                                 <span>Shipped</span>
                             </div>
-                            <span className="bar"> </span>
+                            <span className={data.shipped_status ? "bar pending" : "bar"}> </span>
                             <div className="status_div">
-                                <div className="icon">
+                                <div className={data.arrival_status ? "icon pending" : "icon"}>
                                     <i class="fa-solid fa-check fa-2x"></i>
                                 </div>
                                 <span>Completed</span>

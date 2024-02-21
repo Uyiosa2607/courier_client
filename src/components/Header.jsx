@@ -37,9 +37,9 @@ export default function Header(){
             {/* Navbar Start */}
             <div className="container-fluid p-0">
                 <nav className="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-lg-5">
-                    <a href="index.html" className="navbar-brand ml-lg-3">
+                    <Link href="index.html" className="navbar-brand ml-lg-3">
                         <h1 className="m-0 display-5 text-uppercase text-primary"><i className="fa fa-truck mr-2" />Faster</h1>
-                    </a>
+                    </Link>
                     <button type="button" className="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                         <span className="navbar-toggler-icon" />
                     </button>

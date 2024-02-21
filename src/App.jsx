@@ -37,7 +37,7 @@ function App() {
       }
 
       setData(res.data)
-
+      setLoading(false)
     } catch (error) {
 
     }
