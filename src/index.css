@@ -1,0 +1,25 @@
+html {
+  overflow-x: hidden;
+}
+
+.track_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.spinner {
+  margin: 3rem 2rem;
+}
+
+.spinner img {
+  width: 60px;
+  height: auto;
+}
+
+.reset {
+  opacity: 0;
+  display: none;
+}
