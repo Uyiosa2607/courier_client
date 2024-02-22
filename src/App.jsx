@@ -7,6 +7,12 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import spinner from "/loading.svg"
 import axios from "axios";
+import { createClient } from '@supabase/supabase-js';
+
+const supabaseUrl = 'https://hryfvqqdcwlcarvlxdoy.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhyeWZ2cXFkY3dsY2Fydmx4ZG95Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDgxMTYxMjQsImV4cCI6MjAyMzY5MjEyNH0.XhZa6DDUNjpSBCYxCApgHrEKm3gIIRdoPTLxPo8086Q';
+
+export const supabase = createClient(supabaseUrl, supabaseKey);
 
 function App() {
 
@@ -27,19 +33,22 @@ function App() {
     if (trackNum.length < 2) return
 
     try {
+
       setLoading(true)
-      const req = await axios.get("http://localhost:3000/api/find/" + trackNum)
-      const res = await req
-      console.log(res)
-      if (res.status == 206) {
-        setLoading(false)
-        return setErr(true)
-      }
+      setErr(null)
+      const { data, error } = await supabase
+        .from('Shipments')
+        .select('*')
+        .eq('tracking_number', trackNum);
 
-      setData(res.data)
+        setData(data[0])
       setLoading(false)
+      if (data[0] === undefined) {
+        setErr(true)
+        setLoading(false);
+      }
     } catch (error) {
-
+      console.log(error)
     }
   }
 

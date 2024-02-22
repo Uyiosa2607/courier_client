@@ -1,26 +1,26 @@
 import "./card.css"
 
-export default function Card(props){
+export default function Card(props) {
 
     const data = props.data
-
     const error = props.error
+    const inputDate = data.arrival_date;
+    const date = new Date(inputDate);
+    const formattedDate = date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
 
     return (
         <>
-            {error ? (<p style={{padding: "1rem", color: "red"}}>No Shipments Found with the provided Tracking Number, Please provide a valid Tracking Number</p>) :
-             (
+            {error ? (<p style={{ padding: "1rem", color: "red" }}>No Shipments Found with the provided Tracking Number, Please provide a valid Tracking Number</p>) :
+                (
                     <div className="card">
                         <div className="top_bar">
-                            <span>Order tracking - {data.tracking_number}</span>
-                        </div>
-                        <div className="card_details">
-                            <span className="status">IN TRANSIT</span>
-                            <span className="delivery_date">JUN 12 2024</span>
+                            <i class="fa-solid fa-truck-fast fa-2x"></i>
+                            <span>Estimated Arrival:</span>
+                            <h3 className="date">{formattedDate}</h3>
                         </div>
                         <div className="card_body">
                             <div className="status_div">
-                                <div className={data.processing_status ? "icon pending": "icon"}>
+                                <div className={data.processing_status ? "icon pending" : "icon"}>
                                     <i class="fa-solid fa-truck-fast fa-2x"></i>
                                 </div>
                                 <span>Picked up</span>
@@ -41,8 +41,8 @@ export default function Card(props){
                             </div>
                         </div>
                     </div>
-             )}
-            
+                )}
+
         </>
     )
 }
