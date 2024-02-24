@@ -6,7 +6,6 @@ import feature_image from "/feature.jpg"
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import spinner from "/loading.svg"
-import axios from "axios";
 import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = 'https://hryfvqqdcwlcarvlxdoy.supabase.co';
@@ -29,26 +28,33 @@ function App() {
   const [err, setErr] = useState(null)
 
   async function HandleSubmit() {
-
-    if (trackNum.length < 2) return
+    if (trackNum.length < 2) return;
 
     try {
+      setLoading(true);
+      setErr(null);
 
-      setLoading(true)
-      setErr(null)
       const { data, error } = await supabase
         .from('Shipments')
         .select('*')
         .eq('tracking_number', trackNum);
 
-        setData(data[0])
-      setLoading(false)
-      if (data[0] === undefined) {
-        setErr(true)
+      setData(data[0]);
+      setLoading(false);
+
+      if (error) {
+        setErr(true);
         setLoading(false);
+        return;
+      }
+
+      if (!data[0] || !data[0].arrival_status) {
+        setErr(true);
+        setLoading(false);
+        return;
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
