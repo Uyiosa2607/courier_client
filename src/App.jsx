@@ -15,8 +15,6 @@ export const supabase = createClient(supabaseUrl, supabaseKey);
 
 function App() {
 
-  const [track, setTrack] = useState(false);
-
   const [trackNum, setTrackNum] = useState("");
 
   const [data, setData] = useState([])
@@ -28,7 +26,7 @@ function App() {
   const [err, setErr] = useState(null)
 
   async function HandleSubmit() {
-    if (trackNum.length < 2) return;
+    if (trackNum.length < 2) return alert("Invalid tracking Number");
 
     try {
       setLoading(true);
@@ -39,20 +37,20 @@ function App() {
         .select('*')
         .eq('tracking_number', trackNum);
 
-      setData(data[0]);
-      setLoading(false);
-
       if (error) {
         setErr(true);
         setLoading(false);
         return;
       }
 
-      if (!data[0] || !data[0].arrival_status) {
+      if (!data[0]) {
         setErr(true);
         setLoading(false);
         return;
       }
+
+      setData(data[0])
+      setLoading(false)
     } catch (error) {
       console.log(error);
     }
@@ -80,7 +78,7 @@ function App() {
           <h1 className="text-white display-3 mb-5">Logistics Services</h1>
           <div className="mx-auto" style={{ width: '100%', maxWidth: '600px' }}>
             <div className="input-group">
-              <input onChange={(e) => setTrackNum(e.target.value)} value={trackNum} type="text" className="form-control border-light" style={{ padding: '30px' }} placeholder="Tracking Id" />
+              <input onChange={(e) => setTrackNum(e.target.value.toUpperCase())} value={trackNum} type="text" className="form-control border-light" style={{ padding: '30px' }} placeholder="Tracking Id" />
               <div className="input-group-append">
                 <button onClick={HandleSubmit} data-target="#videoModal" data-toggle="modal" className="btn btn-primary px-3">Track &amp; Trace</button>
               </div>
