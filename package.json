@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.3.3",
     "@supabase/supabase-js": "^2.39.7",
     "axios": "^1.6.7",
     "leaflet": "^1.9.4",

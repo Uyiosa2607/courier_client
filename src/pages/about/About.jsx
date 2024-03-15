@@ -6,7 +6,7 @@ export default function About(){
     return (
         <div>
             <meta charSet="utf-8" />
-            <title>FASTER - Logistics Company Website Template</title>
+            <title>Logistics Company Website</title>
             <meta content="width=device-width, initial-scale=1.0" name="viewport" />
             <meta content="Free HTML Templates" name="keywords" />
             <meta content="Free HTML Templates" name="description" />
@@ -33,7 +33,7 @@ export default function About(){
                         <div className="col-lg-7">
                             <h6 className="text-primary text-uppercase font-weight-bold">About Us</h6>
                             {/* <h1 className="mb-4">Trusted &amp; Faster Logistic Service Provider</h1> */}
-                            <p className="mb-4">Wagon Express Courier we enable our customers – Legal, Medical, Industrial, Automotive, and Same Day Long Distance; to prosper by delivering their products on time in a professional manner. Our company will continuously challenge ourselves to exceed our customers’ expectations by providing leading edge courier and messenger solutions to their needs. Wagon Express Courier is committed to total customer satisfaction. We know that your courier and shipping needs change, so we offer the customization necessary to satisfy your unique delivery requirements. Your delivery deadlines will be met with professional, speedy, efficient, reliable and individual service. We make it our aim to maintain customers satisfied with our delivery service. It is this superior customer service that continues to be the hallmark of our courier and messenger success and is the main ingredient that prompts our long list of repeat customers to call us again and again with their most discriminating delivery and courier needs.</p>
+                            <p className="mb-4">freight experts Logistics, we deliver our customers – Legal, Medical, Industrial, Automotive Industry to prosper by delivering their products on time in a professional manner. Our company will continuously challenge ourselves to exceed our customers’ expectations by providing leading edge courier and messenger solutions to their needs. freight experts Logistics  is committed to total customer satisfaction. We know that your courier and shipping needs changes, so we offer the customization necessary to satisfy your unique delivery requirements. Your delivery deadlines will be met with professional, speedy, efficient, reliable and individual service. We make it our aim to maintain customers satisfied with our delivery service. It is this superior customer service that continues to be the hallmark of our courier and messenger success and is the main ingredient that prompts our long list of repeat customers to call us again and again with their most discriminating delivery and courier needs.</p>
                         </div>
                     </div>
                 </div>
@@ -66,18 +66,11 @@ export default function About(){
                     </div>
                 </div>
             </div>
-            {/* Features End */}
-            {/* Team Start */}
             
-            {/* Team End */}
-            {/* Footer Start */}
                 <Footer/>
-            {/* Footer End */}
-            {/* Back to Top */}
+           
             <a href="#" className="btn btn-lg btn-primary back-to-top"><i className="fa fa-angle-double-up" /></a>
-            {/* JavaScript Libraries */}
-            {/* Contact Javascript File */}
-            {/* Template Javascript */}
+        
         </div>
 
     )

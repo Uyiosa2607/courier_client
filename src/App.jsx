@@ -1,5 +1,5 @@
 import "./index.css"
-import { useState } from "react"
+import { useState, useRef } from "react"
 import Card from "./components/card.jsx/Card";
 import about_image from "/about.jpg"
 import feature_image from "/feature.jpg"
@@ -7,6 +7,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import spinner from "/loading.svg"
 import { createClient } from '@supabase/supabase-js';
+import emailjs from '@emailjs/browser';
 
 const supabaseUrl = 'https://hryfvqqdcwlcarvlxdoy.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhyeWZ2cXFkY3dsY2Fydmx4ZG95Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDgxMTYxMjQsImV4cCI6MjAyMzY5MjEyNH0.XhZa6DDUNjpSBCYxCApgHrEKm3gIIRdoPTLxPo8086Q';
@@ -56,10 +57,25 @@ function App() {
     }
   }
 
+
+  const form = useRef();
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs.sendForm('courier_services', 'template_b8bolft', form.current, 'X16ZK_Fas-bbeQ4Ba')
+      .then((result) => {
+        alert("message sent");
+      }, (error) => {
+        alert("something went wrong please reload page and try again")
+      });
+  };
+
+
   return (
     <div>
       <meta charSet="utf-8" />
-      <title>FASTER - Logistics Company Website Template</title>
+      <title>freight experts - Logistics Company Website</title>
       <meta content="width=device-width, initial-scale=1.0" name="viewport" />
       <meta content="Free HTML Templates" name="keywords" />
       <meta content="Free HTML Templates" name="description" />
@@ -109,7 +125,7 @@ function App() {
                     <span aria-hidden="true">×</span>
                   </button>
                   <div className="embed-modal">
-                    {/* <iframe className="embed-responsive-item" src id="video" allowscriptaccess="always" allow="autoplay" /> */}
+                    
                     {!loading && <Card data={data} error={err} />}
                     {
                       loading && <div className="spinner">
@@ -149,12 +165,12 @@ function App() {
             </div>
             <div className="col-lg-5">
               <div className="bg-primary py-5 px-4 px-sm-5">
-                <form className="py-5">
+                <form ref={form} onSubmit={sendEmail} className="py-5">
                   <div className="form-group">
-                    <input type="text" className="form-control border-0 p-4" placeholder="Your Name" required="required" />
+                    <input name="user_name" type="text" className="form-control border-0 p-4" placeholder="Your Name" required="required" />
                   </div>
                   <div className="form-group">
-                    <input type="email" className="form-control border-0 p-4" placeholder="Your Email" required="required" />
+                    <input name="email" type="email" className="form-control border-0 p-4" placeholder="Your Email" required="required" />
                   </div>
                   <div>
                     <button className="btn btn-dark btn-block border-0 py-3" type="submit">Get A Quote</button>
@@ -213,7 +229,7 @@ function App() {
             <div className="col-lg-7 py-5 py-lg-0">
               <h6 className="text-primary text-uppercase font-weight-bold">Why Choose Us</h6>
               <h1 className="mb-4">Faster, Safe and Trusted Logistics Services</h1>
-              <p className="mb-4">With Wagon Express Courier’ scheduled delivery service, our customers get daily pick-ups for their many types of repetitive deliveries. Whether it’s bank deposits, daily warehouse sweeps, interoffice deliveries or more, Wagon Express Courier is ready to be there when you need us.</p>
+              <p className="mb-4">With freight experts Logistics Courier’ scheduled delivery service, our customers get daily pick-ups for their many types of repetitive deliveries. Whether it’s bank deposits, daily warehouse sweeps, interoffice deliveries or more, freight experts Logistics Courier is ready to be there when you need us.</p>
               <ul className="list-inline">
                 <li><h6><i className="far fa-dot-circle text-primary mr-3" />Best In Industry</h6>
                 </li><li><h6><i className="far fa-dot-circle text-primary mr-3" />Emergency Services</h6></li>

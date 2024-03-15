@@ -4,6 +4,8 @@
     height: fit-content;
     font-size: 10px;
     font-weight: 500;
+    border: none;
+    padding: 1rem;
 }
 
 h2 {
@@ -27,15 +29,4 @@ h2:nth-child(1) {
     font-size: 14px;
     text-transform: capitalize;
     padding: .5rem 0;
-}
-
-
-.date {
-    color: aliceblue;
-    font-weight: 500;
-}
-
-.pending {
-    background: green;
-    border: 3px solid green;
 }

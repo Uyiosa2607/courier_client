@@ -7,9 +7,9 @@ export default function Footer() {
                         <div className="row">
                             <div className="col-md-6 mb-5">
                                 <h3 className="text-primary mb-4">Get In Touch</h3>
-                                <p><i className="fa fa-map-marker-alt mr-2" />123 Street, New York, USA</p>
+                                <p><i className="fa fa-map-marker-alt mr-2" />410 Golf Course Dr, Charlottesville, USA</p>
                                 <p><i className="fa fa-phone-alt mr-2" />+012 345 67890</p>
-                                <p><i className="fa fa-envelope mr-2" />info@example.com</p>
+                                <p><i className="fa fa-envelope mr-2" />freightexperts.online</p>
                                 <div className="d-flex justify-content-start mt-4">
                                     <a className="btn btn-outline-light btn-social mr-2" href="#"><i className="fab fa-twitter" /></a>
                                     <a className="btn btn-outline-light btn-social mr-2" href="#"><i className="fab fa-facebook-f" /></a>

@@ -6,7 +6,7 @@ export default function Card(props) {
     const { data, error} = props;
 
     return (
-        <>
+        <div style={{padding: ".5rem"}}>
             {error ? (
                 <p style={{ padding: "1rem", color: "red" }}>
                     No Shipments Found with the provided Tracking Number, Please provide a valid Tracking Number
@@ -36,12 +36,12 @@ export default function Card(props) {
                                 <span>Status:&nbsp; &nbsp;{data.status}</span>
                                 <span>Current Location:&nbsp; &nbsp;{data.current_location}</span>
                                 <span>Package Type:&nbsp; &nbsp;{data.package_type}</span>
-                                <span>Description:&nbsp; &nbsp; *** {data.desc}**** </span>
+                                <span>Description:&nbsp; &nbsp; *** {data.desc} **** </span>
                             </div>
                     </div>
 
                 </div>
             )}
-        </>
+        </div>
     )
 }

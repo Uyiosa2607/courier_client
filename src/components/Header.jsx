@@ -9,7 +9,7 @@ export default function Header(){
                         <div className="d-inline-flex align-items-center text-white">
                             <small><i className="fa fa-phone-alt mr-2" />+012 345 6789</small>
                             <small className="px-3">|</small>
-                            <small><i className="fa fa-envelope mr-2" />info@example.com</small>
+                            <small><i className="fa fa-envelope mr-2" />freightexperts.online</small>
                         </div>
                     </div>
                     <div className="col-lg-6 text-center text-lg-right">
@@ -38,7 +38,7 @@ export default function Header(){
             <div className="container-fluid p-0">
                 <nav className="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-lg-5">
                     <Link href="index.html" className="navbar-brand ml-lg-3">
-                        <h1 className="m-0 display-5 text-uppercase text-primary"><i className="fa fa-truck mr-2" />Faster</h1>
+                        <h1 className="m-0 display-5 text-uppercase text-primary"><i className="fa fa-truck mr-2" />freight experts</h1>
                     </Link>
                     <button type="button" className="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                         <span className="navbar-toggler-icon" />
