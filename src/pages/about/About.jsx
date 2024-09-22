@@ -3,6 +3,7 @@ import Header from "../../components/Header";
 import about_img from "/about.jpg"
 
 export default function About(){
+
     return (
         <div>
             <meta charSet="utf-8" />
