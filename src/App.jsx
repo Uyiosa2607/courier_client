@@ -18,7 +18,11 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [trackingData, setTrackingData] = useState(null);
+
   const handleTracking = async () => {
+    if (trackingNumber.length < 1)
+      return alert("Please enter tracking number!");
+    setIsModalOpen(true);
     setIsLoading(true);
     try {
       const response = await supabase
@@ -63,7 +67,6 @@ function App() {
                 <Button
                   onClick={() => {
                     handleTracking();
-                    setIsModalOpen(true);
                   }}
                   className="ml-2"
                 >
