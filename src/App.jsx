@@ -1,336 +1,338 @@
-import "./index.css";
-import { useState, useRef } from "react";
-import Card from "./components/card.jsx/Card";
-import about_image from "/about.jpg";
-import feature_image from "/feature.jpg";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import emailjs from "@emailjs/browser";
+import { useState } from "react";
+import { Plane, Ship, Truck, CheckCircle, Loader } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { supabase } from "./utils/client";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import Header from "./components/sys/Header";
+import Footer from "./components/sys/Footer";
+import Map from "./components/map/map";
 
 function App() {
-  const [trackNum, setTrackNum] = useState("");
-
-  const [data, setData] = useState([]);
-
-  const [loading, setLoading] = useState(false);
-
-  const [dismiss, setDismiss] = useState(true);
-
-  const [err, setErr] = useState(null);
-
-  const form = useRef();
-
-  const sendEmail = (e) => {
-    e.preventDefault();
-
-    emailjs
-      .sendForm(
-        "courier_services",
-        "template_b8bolft",
-        form.current,
-        "X16ZK_Fas-bbeQ4Ba"
-      )
-      .then(
-        (result) => {
-          alert("message sent");
-        },
-        (error) => {
-          alert("something went wrong please reload page and try again");
-        }
-      );
+  const [trackingNumber, setTrackingNumber] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [trackingData, setTrackingData] = useState(null);
+  const handleTracking = async () => {
+    setIsLoading(true);
+    try {
+      const response = await supabase
+        .from("Shipments")
+        .select("*")
+        .eq("tracking_number", trackingNumber);
+      if (response.error) return;
+      setTrackingData(response.data[0]);
+      return;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <div>
-      <meta charSet="utf-8" />
-      <title>freight experts - Logistics Company Website</title>
-      <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-      <meta content="Free HTML Templates" name="keywords" />
-      <meta content="Free HTML Templates" name="description" />
-      {/* Favicon */}
-      <link href="img/favicon.ico" rel="icon" />
-      {/* Google Web Fonts */}
-      <link rel="preconnect" href="https://fonts.gstatic.com" />
-      <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet"
-      />
-      {/* Font Awesome */}
-      <link
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
-        rel="stylesheet"
-      />
-
+    <div className="min-h-screen flex flex-col bg-orange-50">
+      {/* Header */}
       <Header />
-      <div className="jumbotron jumbotron-fluid mb-5">
-        <div className="container text-center py-5">
-          <h1 className="text-primary mb-4">Safe &amp; Faster</h1>
-          <h1 className="text-white display-3 mb-5">Logistics Services</h1>
-          <div className="mx-auto" style={{ width: "100%", maxWidth: "600px" }}>
-            <div className="input-group">
-              <input
-                onChange={(e) => setTrackNum(e.target.value.toUpperCase())}
-                value={trackNum}
-                type="text"
-                className="form-control border-light"
-                style={{ padding: "30px" }}
-                placeholder="Tracking Id"
-              />
-              <div className="input-group-append">
-                <button
-                  // onClick={HandleSubmit}
-                  data-target="#videoModal"
-                  data-toggle="modal"
-                  className="btn btn-primary px-3"
+      <main className="flex-grow">
+        {/* Hero */}
+        <div className="bg-orange-100 py-20">
+          <div className="container mx-auto px-4 text-center">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-orange-800">
+              Safe & Faster
+            </h1>
+            <h2 className="text-3xl md:text-4xl mb-8 text-orange-700">
+              Logistics Services
+            </h2>
+            <div className="max-w-md mx-auto">
+              <div className="flex">
+                <Input
+                  type="text"
+                  placeholder="Tracking ID"
+                  value={trackingNumber}
+                  onChange={(e) =>
+                    setTrackingNumber(e.target.value.toUpperCase())
+                  }
+                  className="flex-grow"
+                />
+                <Button
+                  onClick={() => {
+                    handleTracking();
+                    setIsModalOpen(true);
+                  }}
+                  className="ml-2"
                 >
-                  Track &amp; Trace
-                </button>
+                  Track & Trace
+                </Button>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      {/* About Start */}
-      <div className="container-fluid py-5">
-        <div className="container">
-          <div className="row align-items-center">
-            <div className="col-lg-5 pb-4 pb-lg-0">
-              <img className="img-fluid w-100" src={about_image} alt="" />
-              <div className="bg-primary text-dark text-center p-4">
-                <h3 className="m-0">25+ Years Experience</h3>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* Video Modal */}
 
-        {dismiss && (
-          <div
-            className="modal fade"
-            id="videoModal"
-            tabIndex={-1}
-            role="dialog"
-            style={{ display: "none" }}
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-          >
-            <div className="modal-dialog" role="document">
-              <div className="modal-content">
-                <div className="modal-body">
-                  <button
-                    type="button"
-                    className="close"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">×</span>
-                  </button>
-                  <div className="embed-modal">
-                    {!loading && <Card data={data} error={err} />}
-                    {loading && (
-                      <div className="spinner">
-                        <img src={spinner} alt="loading icon" />
-                      </div>
-                    )}
-                  </div>
+        {/* About */}
+        <div className="py-16">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col md:flex-row items-center">
+              <div className="md:w-1/2 mb-8 md:mb-0">
+                <img
+                  src="/img/header.jpg"
+                  alt="About Us"
+                  className="rounded-lg shadow-lg"
+                />
+                <div className="bg-orange-600 text-white text-center p-4 mt-4 rounded">
+                  <h3 className="text-xl font-bold">25+ Years Experience</h3>
                 </div>
               </div>
-            </div>
-          </div>
-        )}
-      </div>
-      {/* About End */}
-      {/*  Quote Request Start */}
-      <div className="container-fluid bg-secondary my-5">
-        <div className="container">
-          <div className="row align-items-center">
-            <div className="col-lg-7 py-5 py-lg-0">
-              <h6 className="text-primary text-uppercase font-weight-bold">
-                Get A Quote
-              </h6>
-              <h1 className="mb-4">Request A Free Quote</h1>
-              <div className="row">
-                <div className="col-sm-4">
-                  <h1 className="text-primary mb-2" data-toggle="counter-up">
-                    225
-                  </h1>
-                  <h6 className="font-weight-bold mb-4">SKilled Experts</h6>
-                </div>
-                <div className="col-sm-4">
-                  <h1 className="text-primary mb-2" data-toggle="counter-up">
-                    1050
-                  </h1>
-                  <h6 className="font-weight-bold mb-4">Happy Clients</h6>
-                </div>
-                <div className="col-sm-4">
-                  <h1 className="text-primary mb-2" data-toggle="counter-up">
-                    2500
-                  </h1>
-                  <h6 className="font-weight-bold mb-4">Complete Deliveries</h6>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-5">
-              <div className="bg-primary py-5 px-4 px-sm-5">
-                <form ref={form} onSubmit={sendEmail} className="py-5">
-                  <div className="form-group">
-                    <input
-                      name="user_name"
-                      type="text"
-                      className="form-control border-0 p-4"
-                      placeholder="Your Name"
-                      required="required"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <input
-                      name="email"
-                      type="email"
-                      className="form-control border-0 p-4"
-                      placeholder="Your Email"
-                      required="required"
-                    />
-                  </div>
-                  <div>
-                    <button
-                      className="btn btn-dark btn-block border-0 py-3"
-                      type="submit"
-                    >
-                      Get A Quote
-                    </button>
-                  </div>
-                </form>
+              <div className="md:w-1/2 md:pl-8">
+                <h2 className="text-3xl font-bold mb-4 text-orange-800">
+                  About Our Company
+                </h2>
+                <p className="mb-4 text-orange-900">
+                  With over 25 years of experience in the logistics industry,
+                  we&apos;ve built a reputation for reliability, efficiency, and
+                  customer satisfaction. Our team of experts is dedicated to
+                  providing the best logistics solutions for businesses of all
+                  sizes.
+                </p>
+                <Button>Learn More</Button>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      {/* Quote Request Start */}
-      {/* Services Start */}
-      <div className="container-fluid pt-5">
-        <div className="container">
-          <div className="text-center pb-2">
-            <h6 className="text-primary text-uppercase font-weight-bold">
+
+        {/* Services */}
+        <div className="py-16 bg-orange-100">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold text-center mb-8 text-orange-800">
               Our Services
-            </h6>
-            <h1 className="mb-4">Best Logistic Services</h1>
-          </div>
-          <div className="row pb-3">
-            <div className="col-lg-3 col-md-6 text-center mb-5">
-              <div className="d-flex align-items-center justify-content-center bg-primary mb-4 p-4">
-                <i className="fa fa-2x fa-plane text-dark pr-3" />
-                <h6 className="text-white font-weight-medium m-0">
-                  Air Freight
-                </h6>
-              </div>
-              <p>
-                Ideal for larger shipments, we work with the best airlines in
-                the world to guarantee you safe and quick delivery, with full
-                tracking visibility, customs clearance, expert handling of
-                shipping and regulatory paperwork. Our air freight service is
-                second to none.
-              </p>
-              <a className="border-bottom text-decoration-none" href>
-                Read More
-              </a>
-            </div>
-            <div className="col-lg-3 col-md-6 text-center mb-5">
-              <div className="d-flex align-items-center justify-content-center bg-primary mb-4 p-4">
-                <i className="fa fa-2x fa-ship text-dark pr-3" />
-                <h6 className="text-white font-weight-medium m-0">
-                  Ocean Freight
-                </h6>
-              </div>
-              <p>
-                If there is not enough goods to fill a whole 20 foot, we suggest
-                shipping less than a container´s capacity. Just pay attention to
-                the following. Make sure your packaging keeps the shipping goods
-                safe because you will be sharing container space with other
-                shippers, and confirm the destination charge for LCL shipping
-                before shipping the goods.
-              </p>
-              <a className="border-bottom text-decoration-none" href>
-                Read More
-              </a>
-            </div>
-            <div className="col-lg-3 col-md-6 text-center mb-5">
-              <div className="d-flex align-items-center justify-content-center bg-primary mb-4 p-4">
-                <i className="fa fa-2x fa-truck text-dark pr-3" />
-                <h6 className="text-white font-weight-medium m-0">
-                  Land Transport
-                </h6>
-              </div>
-              <p>
-                It is cost efficient with 24 to 48 hours transit time to major
-                cities. This is a great option for delivery of sensitive
-                products such as Pharmaceuticals and other merchandise.
-              </p>
-              <a className="border-bottom text-decoration-none" href>
-                Read More
-              </a>
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {[
+                {
+                  icon: Plane,
+                  title: "Air Freight",
+                  description:
+                    "Ideal for larger shipments, we work with the best airlines in the world to guarantee you safe and quick delivery.",
+                },
+                {
+                  icon: Ship,
+                  title: "Ocean Freight",
+                  description:
+                    "If there is not enough goods to fill a whole 20 foot container, we suggest shipping less than a container's capacity.",
+                },
+                {
+                  icon: Truck,
+                  title: "Land Transport",
+                  description:
+                    "It is cost efficient with 24 to 48 hours transit time to major cities. Great for delivery of sensitive products.",
+                },
+              ].map((service, index) => (
+                <div
+                  key={index}
+                  className="text-center bg-white p-6 rounded-lg shadow-lg"
+                >
+                  <div className="bg-orange-600 text-white p-4 rounded-full inline-block mb-4">
+                    <service.icon size={32} />
+                  </div>
+                  <h3 className="text-xl font-bold mb-2 text-orange-800">
+                    {service.title}
+                  </h3>
+                  <p className="mb-4 text-orange-900">{service.description}</p>
+                  <a
+                    href="#"
+                    className="text-orange-600 hover:text-orange-700 font-semibold"
+                  >
+                    Read More
+                  </a>
+                </div>
+              ))}
             </div>
           </div>
         </div>
-      </div>
-      {/* Services End */}
-      {/* Features Start */}
-      <div className="container-fluid bg-secondary my-5">
-        <div className="container">
-          <div className="row align-items-center">
-            <div className="col-lg-5">
-              <img className="img-fluid w-100" src={feature_image} alt="" />
-            </div>
-            <div className="col-lg-7 py-5 py-lg-0">
-              <h6 className="text-primary text-uppercase font-weight-bold">
-                Why Choose Us
-              </h6>
-              <h1 className="mb-4">
-                Faster, Safe and Trusted Logistics Services
-              </h1>
-              <p className="mb-4">
-                With freight experts Logistics Courier’ scheduled delivery
-                service, our customers get daily pick-ups for their many types
-                of repetitive deliveries. Whether it’s bank deposits, daily
-                warehouse sweeps, interoffice deliveries or more, freight
-                experts Logistics Courier is ready to be there when you need us.
-              </p>
-              <ul className="list-inline">
-                <li>
-                  <h6>
-                    <i className="far fa-dot-circle text-primary mr-3" />
-                    Best In Industry
-                  </h6>
-                </li>
-                <li>
-                  <h6>
-                    <i className="far fa-dot-circle text-primary mr-3" />
-                    Emergency Services
-                  </h6>
-                </li>
-                <li>
-                  <h6>
-                    <i className="far fa-dot-circle text-primary mr-3" />
-                    24/7 Customer Support
-                  </h6>
-                </li>
-              </ul>
-              <a href className="btn btn-primary mt-3 py-2 px-4">
-                Learn More
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
 
+        {/* Features */}
+        <div className="py-16">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col md:flex-row items-center">
+              <div className="md:w-1/2 mb-8 md:mb-0">
+                <img
+                  src="/img/feature.jpg"
+                  alt="Features"
+                  className="rounded-lg shadow-lg"
+                />
+              </div>
+              <div className="md:w-1/2 md:pl-8">
+                <h2 className="text-3xl font-bold mb-4 text-orange-800">
+                  Why Choose Us
+                </h2>
+                <h3 className="text-2xl mb-4 text-orange-700">
+                  Faster, Safe and Trusted Logistics Services
+                </h3>
+                <p className="mb-6 text-orange-900">
+                  With Freight Experts Logistics Courier scheduled delivery
+                  service, our customers get daily pick-ups for their many types
+                  of repetitive deliveries. Whether it&apos;s bank deposits,
+                  daily warehouse sweeps, interoffice deliveries or more,
+                  we&apos;re ready to be there when you need us.
+                </p>
+                <ul className="mb-6 space-y-2">
+                  <li className="flex items-center">
+                    <CheckCircle className="text-orange-600 mr-2" />
+                    <span className="text-orange-900">Best In Industry</span>
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle className="text-orange-600 mr-2" />
+                    <span className="text-orange-900">Emergency Services</span>
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle className="text-orange-600 mr-2" />
+                    <span className="text-orange-900">
+                      24/7 Customer Support
+                    </span>
+                  </li>
+                </ul>
+                <Button>Learn More</Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      {/* Footer */}
       <Footer />
-      {/* Footer End */}
-      {/* Back to Top */}
-      <a href="#" className="btn btn-lg btn-primary back-to-top">
-        <i className="fa fa-angle-double-up" />
-      </a>
-      {/* JavaScript Libraries */}
-      {/* Contact Javascript File */}
-      {/* Template Javascript */}
+
+      {/* Tracking Modal */}
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent className="w-[95%] h-[90vh] rounded-lg p-2 overflow-y-scroll m:w-[680px] mx-auto">
+          <DialogHeader>
+            <DialogTitle>Tracking Information</DialogTitle>
+          </DialogHeader>
+          {isLoading ? (
+            <div className="flex items-center justify-center h-20">
+              <Loader className="animate-spin text-orange-600" />
+            </div>
+          ) : trackingData ? (
+            <div className="space-y-4">
+              <div className="w-full h-64 bg-orange-100 rounded-lg">
+                <Map data={trackingData} />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2 bg-orange-50 p-4 rounded-lg">
+                  <h2 className="text-lg font-semibold text-orange-800">
+                    SENDER INFO
+                  </h2>
+                  <p>
+                    <span className="font-medium text-orange-700">
+                      Sender Name:
+                    </span>{" "}
+                    <span className="text-orange-900">
+                      {trackingData.sender_name}
+                    </span>
+                  </p>
+                  <p>
+                    <span className="font-medium text-orange-700">
+                      Sender Number:
+                    </span>{" "}
+                    <span className="text-orange-900">
+                      {trackingData.sender_number}
+                    </span>
+                  </p>
+                </div>
+                <div className="space-y-2 bg-orange-50 p-4 rounded-lg">
+                  <h2 className="text-lg font-semibold text-orange-800">
+                    RECEIVER INFO
+                  </h2>
+                  <p>
+                    <span className="font-medium text-orange-700">
+                      Receiver Name:
+                    </span>{" "}
+                    <span className="text-orange-900">
+                      {trackingData.receiver_name}
+                    </span>
+                  </p>
+                  <p>
+                    <span className="font-medium text-orange-700">
+                      Receiver Number:
+                    </span>{" "}
+                    <span className="text-orange-900">
+                      {trackingData.receiver_number}
+                    </span>
+                  </p>
+                  <p>
+                    <span className="font-medium text-orange-700">
+                      Receiver Address:
+                    </span>{" "}
+                    <span className="text-orange-900">
+                      {trackingData.receiver_address}
+                    </span>
+                  </p>
+                </div>
+              </div>
+              <div className="space-y-2 bg-orange-50 p-4 rounded-lg">
+                <h2 className="text-lg font-semibold text-orange-800">
+                  PACKAGE INFORMATION
+                </h2>
+                <div className="grid grid-cols-2 gap-2">
+                  <p>
+                    <span className="font-medium text-orange-700">
+                      Package weight:
+                    </span>{" "}
+                    <span className="text-orange-900">
+                      {trackingData.weight}
+                    </span>
+                  </p>
+                  <p>
+                    <span className="font-medium text-orange-700">
+                      Shipping Method:
+                    </span>{" "}
+                    <span className="text-orange-900">
+                      {trackingData.method}
+                    </span>
+                  </p>
+                  <p>
+                    <span className="font-medium text-orange-700">Status:</span>{" "}
+                    <span className="text-orange-900">
+                      {trackingData.status}
+                    </span>
+                  </p>
+                  <p>
+                    <span className="font-medium text-orange-700">
+                      Current Location:
+                    </span>{" "}
+                    <span className="text-orange-900">
+                      {trackingData.current_location}
+                    </span>
+                  </p>
+                  <p>
+                    <span className="font-medium text-orange-700">
+                      Package Type:
+                    </span>{" "}
+                    <span className="text-orange-900">
+                      {trackingData.package_type}
+                    </span>
+                  </p>
+                </div>
+                <p>
+                  <span className="font-medium text-orange-700">
+                    Description:
+                  </span>{" "}
+                  <span className="text-orange-900">{trackingData.desc}</span>
+                </p>
+              </div>
+            </div>
+          ) : (
+            <p className="text-red-500 text-center p-4">
+              No Shipments Found with the provided Tracking Number. Please
+              provide a valid Tracking Number.
+            </p>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
