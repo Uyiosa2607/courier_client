@@ -12,6 +12,7 @@ import {
 import Header from "./components/sys/Header";
 import Footer from "./components/sys/Footer";
 import Map from "./components/map/map";
+import { Link } from "react-router-dom";
 
 function App() {
   const [trackingNumber, setTrackingNumber] = useState("");
@@ -102,7 +103,9 @@ function App() {
                   providing the best logistics solutions for businesses of all
                   sizes.
                 </p>
-                <Button>Learn More</Button>
+                <Link to="/about">
+                  <Button>Learn More</Button>
+                </Link>
               </div>
             </div>
           </div>
@@ -146,12 +149,12 @@ function App() {
                     {service.title}
                   </h3>
                   <p className="mb-4 text-orange-900">{service.description}</p>
-                  <a
+                  {/* <a
                     href="#"
                     className="text-orange-600 hover:text-orange-700 font-semibold"
                   >
                     Read More
-                  </a>
+                  </a> */}
                 </div>
               ))}
             </div>
@@ -199,7 +202,7 @@ function App() {
                     </span>
                   </li>
                 </ul>
-                <Button>Learn More</Button>
+                {/* <Button>Learn More</Button> */}
               </div>
             </div>
           </div>
