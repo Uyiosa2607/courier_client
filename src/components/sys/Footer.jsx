@@ -37,7 +37,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-8 text-center">
-          <p>&copy; 2023 Freight Experts. All rights reserved.</p>
+          <p>&copy; 2024 Freight Experts. All rights reserved.</p>
         </div>
       </div>
     </footer>

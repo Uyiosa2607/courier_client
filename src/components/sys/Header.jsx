@@ -9,7 +9,9 @@ export default function Header() {
   return (
     <header className="bg-orange-600 text-white">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Freight Experts</h1>
+        <Link to="/">
+          <h1 className="text-2xl font-bold">Freight Experts</h1>
+        </Link>
         <nav className="hidden md:block">
           <ul className="flex space-x-4">
             <li>
